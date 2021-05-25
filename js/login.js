@@ -4,12 +4,12 @@ const url = 'https://vue3-course-api.hexschool.io/'; // 請加入站點
 const path = 'eva29485577'; // 請加入個人 API Path
 
 //取得dom
-loginBtn=document.querySelector('#loginBtn');
-loginEmail=document.querySelector('#loginEmail');
-loginPassword=document.querySelector('#loginPassword');
-loginStatusText=document.querySelector('#loginStatusText');
-checkEmail=document.querySelector('#emailHelp');
-checkPassword=document.querySelector('#passwordHelp');
+const loginBtn=document.querySelector('#loginBtn');
+const loginEmail=document.querySelector('#loginEmail');
+const loginPassword=document.querySelector('#loginPassword');
+const loginStatusText=document.querySelector('#loginStatusText');
+const checkEmail=document.querySelector('#emailHelp');
+const checkPassword=document.querySelector('#passwordHelp');
 
 let loginStatus='';
 //登入事件

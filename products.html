@@ -2,34 +2,74 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <!-- google font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Pattaya&display=swap"
-    rel="stylesheet">
-    <!-- animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    rel="stylesheet" />
+  <!-- animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <!-- bs5 css -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <!-- reset css -->
-    <link rel="stylesheet" href="./css/reset.css">
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <!-- reset css -->
+  <link rel="stylesheet" href="./css/reset.css" />
   <!-- my css -->
-  <link rel="stylesheet" href="./css/products.css">
+  <link rel="stylesheet" href="./css/products.css" />
 </head>
 
 <body>
-  <div class="main bg-img" id="app">
-    <div class="container">
-      
+  <div class="main bg-img h100vh" id="app">
+    <div class="container text-white">
+      <button type="button" class="btn btn-info text-white" id="checkLoginBtn">
+        確認登入狀態
+      </button>
+      <button type="button" class="btn btn-info text-white" id="getProductsListBtn">
+        取得產品列表
+      </button>
+      <p id="loginStatusText" class="text-warning mb-2 fs-4"></p>
+      <table class="table mt-4 text-white">
+        <thead>
+          <tr>
+            <th>產品名稱</th>
+            <th width="200">圖片</th>
+            <th width="120">原價</th>
+            <th width="120">售價</th>
+            <th width="150">是否啟用</th>
+            <th width="120">刪除</th>
+          </tr>
+        </thead>
+        <tbody id="productsList">
+<tr>
+  <td class="d-flex align-items-center">${item.title}</td>
+  <td width="120">
+    <img src="https://images.unsplash.com/flagged/photo-1554575316-e3194e855ed1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="">
+    
+  </td>
+  <td width="120">
+    ${item.origin_price}
+  </td>
+  <td width="120">
+    ${item.price}
+  </td>
+  <td width="100">
+    <span class="${item.is_enabled ? 'text-success' : 'text-secondary'}">${item.is_enabled ? '啟用' : '未啟用'}</span>
+  </td>
+  <td width="120">
+    <button type="button" class="btn btn-sm btn-outline-danger move deleteBtn" data-action="remove"
+      data-id="${item.id}"> 刪除 </button>
+  </td>
+</tr>
+        </tbody>
+      </table>
+      <p>目前有 <span id="productsCount">0</span> 項產品</p>
 
     </div>
   </div>
-
 
   <!-- bs5 js  -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
