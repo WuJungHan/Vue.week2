@@ -23,7 +23,7 @@ console.log(token);
 
 //登入及驗證-檢查用戶是否仍持續登入  //api: api/user/check
 checkLoginBtn.addEventListener("click", checkLogin);
-function checkLogin(params) {
+function checkLogin() {
   // 取得 Token（Token 僅需要設定一次）已在上方全域設定
   //console.log(token);//驗證是否有取得儲存的token
   axios.defaults.headers.common["Authorization"] = token; //把token加到header內
