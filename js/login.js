@@ -33,7 +33,7 @@ function login(evant) {
 //取得 Token（Token 僅需要設定一次） test2替換成hexToken
 //defaults.headers.common['Authorization']
 const token=document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-console.log(token);
+//console.log(token);//驗證取得token
 
 //驗證帳號密碼是否有輸入
 function checkPass(){
@@ -75,9 +75,9 @@ function axiosLogin(user){
   //api:/admin/signin
   axios.post(`${url}admin/signin`, user)
     .then(res => {//回傳
-      console.log(res);//驗證登入是否成功 data.message 狀態顯示
+      //console.log(res);//驗證登入是否成功 data.message 狀態顯示
       loginStatus=res.data.message;//登入失敗或成功
-      console.log(loginStatus)//驗證
+      //console.log(loginStatus)//驗證
       renderLoginStatus();//執行renderLoginStatus函式
       //登入成功後 expired=到期日 token=憑證 (到期日過憑證就無使用) uid=實際儲存在後端使用的身分
       const token = res.data.token;//取出token憑證

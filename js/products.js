@@ -19,7 +19,7 @@ const token = document.cookie.replace(
   /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
   "$1"
 );
-console.log(token);
+//console.log(token);//驗證取得token
 
 //登入及驗證-檢查用戶是否仍持續登入  //api: api/user/check
 checkLoginBtn.addEventListener("click", checkLogin);
@@ -29,7 +29,7 @@ function checkLogin() {
   axios.defaults.headers.common["Authorization"] = token; //把token加到header內
   // 確認是否登入
   axios.post(`${url}api/user/check`).then((res) => {
-    console.log(res); //驗證是否登入 res.data.success: true
+    //console.log(res); //驗證是否登入 res.data.success: true
     if (res.data.success == true) {
       //如果回傳登入狀態=true
       loginStatusText.innerHTML = `<span class="pattaya">click login complete!</span> 可取得產品列表`; //提示文字
@@ -47,18 +47,18 @@ function getProducts() {
   axios
     .get(`${url}api/${path}/admin/products`) //資料庫每個人path是獨立的
     .then((res) => {
-      console.log(res); //驗證 取得產品列表res.data.products
+      //console.log(res); //驗證 取得產品列表res.data.products
       if (res.data.success == true) {
         productsData = res.data.products; //將空陣列賦與後台products資料
         //console.log(productsData);//驗證
         loginStatusText.textContent = "產品資料如下:";
-        renderProductsList();
+        renderProductsList();//呼叫渲染函式
       } else {
         //console.log(productsData);//驗證
         loginStatusText.textContent = "請重新登入!3秒後轉移至登入頁面!";
         setTimeout(turnLoginPage, 3000); //計時器 延遲3秒執行turnLoginPage函式
         function turnLoginPage() {
-          //轉移至LoginPage函式
+          //轉移至login.html
           window.location = "login.html";
         }
       }
@@ -67,9 +67,8 @@ function getProducts() {
 
 //渲染產品畫面
 function renderProductsList() {
-  let str = "";
-
-  productsData.forEach((item) => {
+  let str = "";//初始化空字串
+  productsData.forEach((item) => {//將撈出的後台productsData跑forEach
     //console.log(item);//驗證
     str += `
     <tr class="text-center fs-4 productsListBg border-bottom border-light border-1">
@@ -99,8 +98,8 @@ function renderProductsList() {
   });
   //console.log(str);
   //console.log(productsData.length);
-  productsList.innerHTML = str;
-  productsCount.textContent = productsData.length;
+  productsList.innerHTML = str;//將字串塞入productsList
+  productsCount.textContent = productsData.length;//將productsData長度(資料筆數) 寫上productsCount
 
   deleteProducts(); //呼叫刪除產品函式
 }
@@ -108,34 +107,37 @@ function renderProductsList() {
 //刪除產品 需用到id來判別選到的產品品項
 //管理控制台 [需驗證]-刪除產品
 //api/:api_path/admin/product/:product_id
-//delProductsBtn.addEventListener('click', removeProduct)
 function deleteProducts() {
   //刪除單產品函式
   const delProductsBtn = [...document.querySelectorAll(".delProductsBtn")];//將.delProductsBtn的nodelist(like ary),展開成陣列
+
   //console.log(delProductsBtn);//驗證
-  let productsId = "";
-  let productsIdAry = [];
-  delProductsBtn.forEach((item) => {
+
+  delProductsBtn.forEach((item) => {//item=.delProductsBtn
+    let productsId = "";//初始化空字串
+    let productsIdAry = [];//初始化空陣列
     productsId = item.dataset.id;
     productsIdAry.push(productsId);
 
-    item.addEventListener("click", () => {
-      productsIdAry.forEach((item,i) => {
-        if (item == productsId) {
-          if (window.confirm("你確定要刪除嗎？")) {
-            //console.log('示範用');//驗證選取確定
+    item.addEventListener("click", () => {//當按鈕被點擊
+      productsIdAry.forEach((item) => {//item=productsIdAry
+        if (item == productsId) {//如果productsIdAry內的資料=productsId時
+          if (window.confirm("Are you sure to delete the product?") == true) {//彈跳選擇視窗
+            //console.log('nice');//驗證選取確定
             // 刪除一個產品
             axios
-              .delete(`${url}api/${path}/admin/product/${item}`)
+              .delete(`${url}api/${path}/admin/product/${productsId}`)
               .then((res) => {
                 //console.log(res);//驗證
-                getProducts();
+                getProducts();//呼叫取得產品資料函式 並重新渲染畫面
                 loginStatusText.innerHTML = `<span class="pattaya">delete complete!</span>`; //提示文字
               });
 
+          } else {
+            //console.log('選的好');//驗證選取取消
+            loginStatusText.innerHTML = `<span class="pattaya">cancel delete!</span>`; //提示文字
           }
-          //console.log('選的好');//驗證選取取消
-          loginStatusText.innerHTML = `<span class="pattaya">cancel delete!</span>`; //提示文字
+
         }
       });
     });
@@ -143,4 +145,3 @@ function deleteProducts() {
   //console.log(productsIdAry);//驗證用
 }
 
-/* <span class="${item.is_enabled ? 'text-success' : 'text-secondary'}">${item.is_enabled ? '啟用' : '未啟用'}</span> */
