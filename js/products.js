@@ -13,7 +13,7 @@ const loginStatusText = document.querySelector("#loginStatusText");
 //宣告空陣列
 let productsData = [];
 
-//取得 Token（Token 僅需要設定一次） test2替換成hexToken
+//取得 Token 已在login頁面儲存（Token 僅需要設定一次） test2替換成hexToken
 //defaults.headers.common['Authorization']
 const token = document.cookie.replace(
   /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
@@ -28,14 +28,19 @@ function checkLogin() {
   //console.log(token);//驗證是否有取得儲存的token
   axios.defaults.headers.common["Authorization"] = token; //把token加到header內
   // 確認是否登入
-  axios.post(`${url}api/user/check`).then((res) => {
+  axios.post(`${url}api/user/check`)
+  .then((res) => {
     //console.log(res); //驗證是否登入 res.data.success: true
-    if (res.data.success == true) {
+    if (res.data.success) {//=true
       //如果回傳登入狀態=true
       loginStatusText.innerHTML = `<span class="pattaya">click login complete!</span> 可取得產品列表`; //提示文字
     } else {
       loginStatusText.innerHTML = `<span class="pattaya">click login complete!</span>`; //提示文字
     }
+  })
+  .catch((error)=> {//接收錯誤回傳
+    // handle error
+    console.log(error);
   });
 }
 
@@ -44,8 +49,7 @@ getProductsListBtn.addEventListener("click", getProducts);
 function getProducts() {
   // 取得 Token（Token 僅需要設定一次）已在上方全域設定
   // 取得後台產品列表
-  axios
-    .get(`${url}api/${path}/admin/products`) //資料庫每個人path是獨立的
+  axios.get(`${url}api/${path}/admin/products`) //資料庫每個人path是獨立的
     .then((res) => {
       //console.log(res); //驗證 取得產品列表res.data.products
       if (res.data.success == true) {
@@ -62,7 +66,11 @@ function getProducts() {
           window.location = "login.html";
         }
       }
-    });
+    })
+    .catch((error)=> {//接收錯誤回傳
+    // handle error
+    console.log(error);
+  });
 }
 
 //渲染產品畫面

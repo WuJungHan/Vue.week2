@@ -18,8 +18,8 @@ body {
   background-size: cover;
 }
 
-.h100vh {
-  height: 100vh;
+.min-h-1080 {
+  min-height: 1080px;
 }
 
 .productsListBg {

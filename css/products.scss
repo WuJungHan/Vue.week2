@@ -18,8 +18,8 @@ body {
   background-size: cover;
   //background-position: center;
 }
-.h100vh {
-  height: 100vh;
+.min-h-1080 {
+  min-height: 1080px;
 }
 .productsListBg {
   background: linear-gradient(rgba(0, 0, 0, 0.5));
