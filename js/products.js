@@ -52,7 +52,7 @@ function getProducts() {
   axios.get(`${url}api/${path}/admin/products`) //資料庫每個人path是獨立的
     .then((res) => {
       //console.log(res); //驗證 取得產品列表res.data.products
-      if (res.data.success == true) {
+      if (res.data.success) {//=true
         productsData = res.data.products; //將空陣列賦與後台products資料
         //console.log(productsData);//驗證
         loginStatusText.textContent = "產品資料如下:";
